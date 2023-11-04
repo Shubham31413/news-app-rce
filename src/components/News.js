@@ -84,14 +84,14 @@ export class News extends Component {
     "content": "bitcoin cryptocurrency - stock illustrationGetty\r\n<ul>\n<li>Bitcoin jumped as high as $30,000 on Friday, hovering about 4.5% higher in early trading.</li>\n<li>The token spiked 10% briefly on Tuesday a… [+2058 chars]"
   }]
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       articles: [],
       page: 1,
       pageSize: 24,
       loading: true,
-      type: 'technology'
+      type: this.props.type
     };
   }
 
@@ -103,7 +103,7 @@ export class News extends Component {
     const response = await fetch(`https://newsapi.org/v2/everything?q=${this.state.type}&page=${page}&pageSize=${this.state.pageSize}&apiKey=${this.apiKey}`)
     const data = await response.json();
 
-    console.log(`page is set to ${page}, # of news fetched:`, data.articles.length);
+    console.log(`${this.state.type} page is set to ${page}, # of news fetched:`, data.articles.length);
     this.setState({
       articles: data.articles,
       page: page
@@ -123,15 +123,15 @@ export class News extends Component {
   }
 
   componentDidMount() {
-    this.fetchNews(this.state.page);
-    // this.setState({
-    //   articles: this.articles
-    // })
+    // this.fetchNews(this.state.page);
+    this.setState({
+      articles: this.articles
+    })
   }
 
   render() {
     return (
-      <div className="container" style={{marginTop: '8px'}}>
+      <div className="container" style={{marginTop: '8px', width: '80%'}}>
         {
           this.state.loading && (
             <div className="container" style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '16px', marginBottom: '16px'}}>
@@ -166,5 +166,9 @@ export class News extends Component {
     );
   }
 }
+
+News.defaultProps = {
+  type: 'kubernetes'
+};
 
 export default News;
