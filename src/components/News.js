@@ -98,10 +98,14 @@ export class News extends Component {
   fetchNews = async (page) => {
     console.log(`fetchNews() called...`);
 
+    this.props.updateProgress(10);
     this.setState({loading: true});
 
     const response = await fetch(`https://newsapi.org/v2/everything?q=${this.state.type}&page=${page}&pageSize=${this.state.pageSize}&apiKey=${this.apiKey}`)
+    this.props.updateProgress(60);
+
     const data = await response.json();
+    this.props.updateProgress(80);
 
     console.log(`${this.state.type} page is set to ${page}, # of news fetched:`, data.articles.length);
     this.setState({
@@ -109,6 +113,7 @@ export class News extends Component {
       page: page
     })
 
+    this.props.updateProgress(100);
     this.setState({loading: false});
 
     console.log( `fetchNews() ended...`);

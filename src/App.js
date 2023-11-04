@@ -7,6 +7,7 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+import LoadingBar from 'react-top-loading-bar'
 
 export class App extends Component {
 
@@ -17,7 +18,8 @@ export class App extends Component {
       style: {
         color: '#212529',
         background: '#fff'
-      }
+      },
+      progress: 0
     }
   }
 
@@ -59,16 +61,25 @@ export class App extends Component {
     }
   }
 
+  updateProgress = (progress) => {
+    this.setState({
+      progress: progress
+    })
+  }
+
   render() {
     return (
       <Router>
-        <Navbar title={"NewsApp"} mode={this.state.mode} style={this.state.style} toggleMode={this.toggleMode}/>
+        
+        <LoadingBar color='#f11946' progress={this.state.progress} onLoaderFinished={() => this.setState({progress: 0})} />
+        
+        <Navbar title={"NewsApp"}updateProgress={this.updateProgress} mode={this.state.mode} style={this.state.style} toggleMode={this.toggleMode}/>
         <Routes>
-          <Route exact path="/" element={<News key={"general"} type={"general"} mode={this.state.mode} style={this.state.style} />} />
-          <Route exact path="/sports" element={<News key={"sports"} type={"sports"} mode={this.state.mode} style={this.state.style}  />} />
-          <Route exact path="/technology" element={<News key={"technology"} type={"technology"} mode={this.state.mode} style={this.state.style} />} />
-          <Route exact path="/business" element={<News key={"business"} type={"business"} mode={this.state.mode} style={this.state.style} />} />
-          <Route exact path="/science" element={<News key={"science"} type={"science"} mode={this.state.mode} style={this.state.style} />} />
+          <Route exact path="/" element={<News key={"general"} type={"general"} updateProgress={this.updateProgress} mode={this.state.mode} style={this.state.style} />} />
+          <Route exact path="/sports" element={<News key={"sports"} type={"sports"}updateProgress={this.updateProgress} mode={this.state.mode} style={this.state.style}  />} />
+          <Route exact path="/technology" element={<News key={"technology"} type={"technology"}updateProgress={this.updateProgress} mode={this.state.mode} style={this.state.style} />} />
+          <Route exact path="/business" element={<News key={"business"} type={"business"}updateProgress={this.updateProgress} mode={this.state.mode} style={this.state.style} />} />
+          <Route exact path="/science" element={<News key={"science"} type={"science"}updateProgress={this.updateProgress} mode={this.state.mode} style={this.state.style} />} />
         </Routes>
     </Router>
     )
