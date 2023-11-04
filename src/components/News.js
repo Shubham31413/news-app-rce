@@ -123,10 +123,10 @@ export class News extends Component {
   }
 
   componentDidMount() {
-    // this.fetchNews(this.state.page);
-    this.setState({
-      articles: this.articles
-    })
+    this.fetchNews(this.state.page);
+    // this.setState({
+    //   articles: this.articles
+    // })
   }
 
   render() {
@@ -143,12 +143,14 @@ export class News extends Component {
         <div className="row">
           {this.state.articles && this.state.articles.map((element) => {
             return (
-              <div className="col-md-4" style={{marginBottom: '8px'}} key={element.url}>
+              <div className="col-md-4" style={{marginBottom: '12px'}} key={element.url}>
                 <NewsItem
                   title={element.title ? `${element.title.slice(0, 40)}...` : ""}
                   description={element.description ? `${element.description.slice(0, 80)}...` : ""}
                   url={element.url}
                   urlToImage={element.urlToImage ? element.urlToImage : "https://wwwhatsnew.com/wp-content/uploads/2023/10/radius.jpg"}
+                  mode={this.props.mode} 
+                  style={this.props.style}
                 />
               </div>
             );

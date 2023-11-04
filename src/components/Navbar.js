@@ -7,7 +7,7 @@ export class Navbar extends Component {
   render() {
     return (
         <div className="container" style={{width: '80%'}}>
-            <nav className="navbar navbar-expand-lg bg-body-tertiary">
+            <nav className={`navbar navbar-expand-lg navbar-${this.props.mode} bg-${this.props.mode}`}>
                 <div className="container-fluid">
                     <Link className="navbar-brand" to="/">{this.props.title}</Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="/navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
